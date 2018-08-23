@@ -1,0 +1,118 @@
+* {
+    box-sizing: border-box;
+    font-family: Arial;
+}
+
+body {
+    margin: 0;
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#mainContainer {
+    display: flex;
+    min-height: calc(100vh - 5vh);
+    flex-direction: column;
+    align-items: center;
+}
+
+#canv {
+    border: 4px dashed;
+    margin: 10px;
+    -webkit-animation: colorchange 2s infinite alternate;
+}
+#reichstag {
+    max-width: 40%;
+    max-height: 40%;
+}
+header,
+footer {
+    background: turquoise;
+    height: 20px;
+    color: white;
+}
+
+.highlight {
+    color: blue;
+    font-style: italic;
+}
+
+.petText {
+    font-family: futura;
+    font-style: italic;
+
+    width: 100%;
+
+    text-align: center;
+
+    color: #313131;
+    font-size: 28px;
+    font-weight: bold;
+    -webkit-animation: colorchange 2s infinite alternate;
+}
+
+#gimmeglitter {
+    margin: 10px;
+    font-family: futura;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14px;
+    -webkit-animation: colorchange 2s infinite alternate;
+}
+
+#profileContinue {
+    margin: 10px;
+    font-family: futura;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 14px;
+    -webkit-animation: colorchange 2s infinite alternate;
+}
+@-webkit-keyframes colorchange {
+    0% {
+        color: blue;
+    }
+
+    10% {
+        color: #8e44ad;
+    }
+
+    20% {
+        color: #1abc9c;
+    }
+
+    30% {
+        color: #d35400;
+    }
+
+    40% {
+        color: blue;
+    }
+
+    50% {
+        color: #34495e;
+    }
+
+    60% {
+        color: blue;
+    }
+
+    70% {
+        color: #2980b9;
+    }
+    80% {
+        color: #f1c40f;
+    }
+
+    90% {
+        color: #2980b9;
+    }
+
+    100% {
+        color: pink;
+    }
+}

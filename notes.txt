@@ -1,0 +1,37 @@
+1. use handlebars template to render html pages
+2. Use express routes , i.e. "/petition"
+3. After signature is saved to db, save cookie to remember that, and redirect user to thank you page
+4. Signature: Use canvas to draw stuff under mouse pointer. Listen for mouse down on canvas, listen for mouse move. draw line
+4.1 To save image of sign canvas, use method ".dataurl"
+4.2 on submit, submit first name, last name, sign canvas data URL (sth with hidden)
+
+
+STEPS
+create table, then hanndlebars template, then GET for petition page, then POST for petition page. Then GET for thank you page. Then singers page.
+Last thing = cookies.
+
+# of routes: GET + POST for petition. If insert works, you redirect to thank you page.
+GET for thank you pages
+GET for signers page. SELECT first and last names from siganterus and the pass to res.render
+
+PART   2
+When rendering thankyou page with sig image, use <img src="{{signatures}}">
+
+When getting ID from the DB
+"INSERT INTO people (name)
+VALUES ("SEAN"9
+RETURNING id
+
+const params = ["sean"]
+
+return db.query(q,params).
+then(results => {
+return results.rows[0].id        // < alwas an array. Will be used for req.session.id
+})
+
+
+// app.get("/whatever". (req,res){
+//     req.session = {
+//         sigId: theidofthesignaturerow // here goes whatever we want to store in the session
+//     }
+// }

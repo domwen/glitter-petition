@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Login</title>
+    </head>
+    <body>
+        <div id="mainContainer">
+
+        <h1>LOGIN</h1>
+        <form method="POST" class="form">
+        <div>
+            <input name="first" placeholder="First name">
+            <input name="last" placeholder="Last name">
+            <input name="email" placeholder="Email" required>
+            <input name="password" placeholder="Password" required>
+        </div>
+        <input type="hidden" name="_csrf" value="{{csrfToken}}">
+        <button id="gimmeglitter">Login</button>
+
+    </form>
+</div>
+    </body>
+</html>
