@@ -8,7 +8,12 @@ const {
     saveUser,
     getPassword,
     saveProfile,
-    getSignerData
+    getSignerData,
+    lookForCity,
+    extractProfileInfo,
+    updateUserTable,
+    updateUserTableWithoutPassword,
+    updateProfileTable
 } = require('./db');
 const bodyParser = require('body-parser');
 const hb = require('express-handlebars');
@@ -67,13 +72,9 @@ function checkForUserId(req, res, next) {
 // REGISTER PAGE
 
 app.get('/register', (req, res) => {
-    if (req.session.user) {
-        res.redirect('/petition');
-    } else {
-        res.render('register', {
-            layout: 'main'
-        });
-    }
+    res.render('register', {
+        layout: 'main'
+    });
 });
 
 app.post('/register', (req, res) => {
@@ -140,6 +141,96 @@ app.post('/profile', (req, res) => {
         });
 });
 
+// EDIT PROFILE PAGE
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// In GET part of profile edit we need to fill our forms with the information from the Tables, so we use cool query, which allows
+/// us to combine two or more tables. And to display information we created new handlebars where we inser information.
+/// In our html we simply insert this value to the "value" property and thats how it will be visible on page load.
+///
+/// In post request we need to update two tables. Contrary to how we have extracted information from tables, we will need to create two separate
+/// quries for two tables. And even one more for the tbale with the password and we will have to check if user also changed the password.
+///////////////////////////////////////////////////////////////////////////////////
+
+app.get('/profile/edit', (req, res) => {
+    var userId = req.session.user.userId;
+    console.log(' user ID  ', userId);
+    extractProfileInfo(userId)
+        .then(result => {
+            console.log('This is my results:', result);
+            res.render('profileEdit', {
+                layout: 'main',
+                firstName: result.rows[0].first,
+                lastName: result.rows[0].last,
+                email: result.rows[0].email,
+                // password: result.rows[0].password,
+                age: result.rows[0].age,
+                city: result.rows[0].city,
+                url: result.rows[0].url
+            });
+        })
+        .catch(err => {
+            console.log('Error in extractProfileInfo:', err);
+            res.render('profileEdit', {
+                layout: 'main',
+                error: true,
+                errMessage: err
+            });
+        });
+});
+
+app.post('/profile/edit', (req, res) => {
+    if (req.body.password != '') {
+        hashPass(req.body.password).then(hashedPw => {
+            updateUserTable(
+                req.session.user.userId,
+                req.body.first,
+                req.body.last,
+                req.body.email,
+                hashedPw
+            ).catch(err => {
+                console.log('Error in POST profile/edit :', err);
+                res.render('profileEdit', {
+                    layout: 'main',
+                    error: true,
+                    errMessage: err
+                });
+            });
+        });
+    } else {
+        updateUserTableWithoutPassword(
+            req.session.user.userId,
+            req.body.first,
+            req.body.last,
+            req.body.email
+        ).catch(err => {
+            console.log('Error in updateUserTableWithoutPassword:', err);
+            res.render('profileEdit', {
+                layout: 'main',
+                error: true,
+                errMessage: err
+            });
+        });
+    }
+
+    updateProfileTable(
+        req.body.age,
+        req.body.city,
+        req.body.url,
+        req.session.user.userId
+    )
+        .then(result => {
+            res.redirect('/petition');
+        })
+        .catch(err => {
+            console.log('Error in updateProfileTable: ', err);
+            res.render('profileEdit', {
+                layout: 'main',
+                error: true
+            });
+        });
+});
+
 // LOGIN PAGE
 
 app.get('/login', (req, res) => {
@@ -152,9 +243,22 @@ app.post('/login', (req, res) => {
     // console.log('inside POST login');
     getPassword(req.body.email)
         .then(password => {
+            var userDataObject = password;
             var storedPw = password.rows[0].password;
             checkPass(req.body.password, storedPw).then(result => {
                 if (result) {
+                    console.log(
+                        'inside POST login after checkpass :',
+                        userDataObject
+                    );
+                    req.session = {
+                        user: {
+                            userId: userDataObject.rows[0].id,
+                            firstName: userDataObject.rows[0].first,
+                            lastName: userDataObject.rows[0].last,
+                            signID: userDataObject.rows[0].id
+                        }
+                    };
                     console.log('Password match');
                     res.redirect('/petition');
                 } else {
@@ -167,7 +271,8 @@ app.post('/login', (req, res) => {
             console.log(err);
             res.render('login', {
                 layout: 'main',
-                error: true
+                error: true,
+                errMessage: err
             });
         });
 });
@@ -222,15 +327,39 @@ app.get('/signers', (req, res) => {
             layout: 'main',
             signers: signerData.rows,
             count: signerData.rowCount,
-            homepage: signerData.rows[0].url,
-            age: signerData.rows[0].age,
-            city: signerData.rows[0].city
+            age: signerData.age,
+            city: signerData.rows[0].city,
+            url: signerData.url
         });
     });
 });
 
-app.listen(process.env.PORT || 8080, () => ca.rainbow('La la laa laaaaa'));
+// SIGNERS BY CITY
 
-// Not done:
-// 1. Error message when fields empty
-// 2. Signers page
+app.get('/signers/:city', (req, res) => {
+    var cityName = req.params.city;
+    lookForCity(cityName).then(names => {
+        res.render('signersByCity', {
+            layout: 'main',
+            signers: names.rows,
+            count: names.rowCount,
+            age: names.age,
+            city: names.city,
+            url: names.url
+        });
+    });
+});
+
+// LOGOUT
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/// When we go for /logout, which we access with our button, it will set out session to be null, so when we check if we are logged in,
+/// it will fail and redirect us to the registration page.
+///////////////////////////////////////////////////////////////////////////////////
+
+app.get('/logout', function(req, res) {
+    req.session = null;
+    res.redirect('/login');
+});
+
+app.listen(process.env.PORT || 8080, () => ca.rainbow('La la laa laaaaa'));

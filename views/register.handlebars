@@ -1,25 +1,21 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Register</title>
-    </head>
+
     <body>
-        
-        <div id="mainContainer">
 
-        <h1>REGISTER</h1>
-        <form method="POST" class="form">
-        <div>
-            <input name="first" placeholder="First name" required>
-            <input name="last" placeholder="Last name" required>
-            <input name="email" placeholder="Email" required>
-            <input name="password" placeholder="Password" required>
+            <div id="mainContainer">
+
+            <h1>REGISTER</h1>
+            <form method="POST" class="form">
+            <div>
+                <input name="first" placeholder="First name" required>
+                <input name="last" placeholder="Last name" required>
+                <input name="email" placeholder="Email" required>
+                <input name="password" placeholder="Password" required>
+            </div>
+            <input type="hidden" name="_csrf" value="{{csrfToken}}">
+            <button id="gimmeglitter">Register</button>
+            <div>If you are already a member, please <a href="/login" target="_self">log in</a>.
+            </div>
+
+            </form>
         </div>
-        <input type="hidden" name="_csrf" value="{{csrfToken}}">
-        <button id="gimmeglitter">Register</button>
-
-    </form>
-</div>
     </body>
-</html>

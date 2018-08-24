@@ -48,3 +48,47 @@ module.exports.getSignerData = getSignerData => {
         'SELECT users.first, users.last, user_profiles.age, user_profiles.city, user_profiles.url FROM users JOIN user_profiles ON users.id = user_profiles.user_id'
     );
 };
+
+module.exports.lookForCity = city => {
+    const q =
+        'SELECT users.first, users.last, user_profiles.age, user_profiles.city, user_profiles.url FROM users JOIN user_profiles ON users.id = user_profiles.user_id WHERE city = ($1)';
+    return db.query(q, [city]);
+};
+
+module.exports.extractProfileInfo = user_id => {
+    const q = `SELECT users.first, users.last, users.email,  user_profiles.age, user_profiles.city,   user_profiles.url, user_profiles.user_id
+    FROM users
+    JOIN user_profiles
+    ON users.id= user_profiles.user_id
+    WHERE user_id = $1`;
+    return db.query(q, [user_id]);
+};
+
+module.exports.updateUserTable = (user_id, first, last, email, password) => {
+    const q = `
+    INSERT INTO users (id, first, last, email, password)
+    VALUES ($1, $2, $3, $4, $5)
+    ON CONFLICT (id)
+    DO UPDATE SET first = ($2), last = ($3), email = ($4), password = ($5)
+    `;
+    return db.query(q, [user_id, first, last, email, password]);
+};
+
+exports.updateUserTableWithoutPassword = (user_id, first, last, email) => {
+    const q = `
+    UPDATE users
+    SET first = $2, last = $3, email = $4
+    WHERE id = $1
+    `;
+    return db.query(q, [user_id, first, last, email]);
+};
+
+exports.updateProfileTable = (age, city, url, user_id) => {
+    const q = `
+    INSERT INTO user_profiles (age, city, url, user_id)
+    VALUES ($1, $2, $3, $4)
+    ON CONFLICT (user_id)
+    DO UPDATE SET age = $1, city = $2, url = $3
+    `;
+    return db.query(q, [age, city, url, user_id]);
+};

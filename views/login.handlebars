@@ -8,6 +8,12 @@
         <div id="mainContainer">
 
         <h1>LOGIN</h1>
+
+        {{#if error}}
+        <div class="error"> Opps! Error! Try Again!  <br>
+        {{errMessage}}</div>
+        {{/if}}
+        
         <form method="POST" class="form">
         <div>
             <input name="first" placeholder="First name">

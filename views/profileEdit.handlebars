@@ -1,0 +1,55 @@
+
+
+    <div id="mainContainer">
+
+
+                    <h2 style="text-decoration: underline; margin-bottom: 10px" > Edit your profile: </h2>
+
+
+
+
+                {{#if error}}
+                <div class="error"> Opps! Error! Try Again!  <br>
+                {{errMessage}}</div>
+                {{/if}}
+
+                <form method="POST" >
+                    <div>
+                        <div class="inputBoxes">
+                            <p>First Name</p>
+                            <input class="nameInput" name="first" value="{{ firstName }}" required>
+                        </div>
+                        <div class="inputBoxes">
+                            <p>Last Name</p>
+                            <input class="nameInput" name="last" value="{{ lastName }}" required>
+
+                        </div>
+                        <div class="inputBoxes">
+                            <p>E-mail</p>
+                            <input class="nameInput" name="email" value="{{ email }}" required>
+
+                        </div>
+                        <div class="inputBoxes">
+                            <p>Password</p>
+                            <input class="nameInput" name="password" value="{{ password }}" type="password">
+
+                        </div>
+                        <div class="inputBoxes">
+                            <p>Age</p>
+                            <input class="nameInput" name="age" value="{{ age }}" required>
+
+                        </div>
+                        <div class="inputBoxes">
+                            <p>City</p>
+                            <input class="nameInput" name="city" value="{{ city }}" required>
+
+                        </div>
+                        <div class="inputBoxes">
+                            <p>Homepage</p>
+                            <input class="nameInput" name="url" value="{{ url }}" required>
+                        </div>
+                    <button class="gimmeglitter">Update</button>
+                </div>
+                    <input name="_csrf" value="{{csrfToken}}" type="hidden"> <!-- security feature -->
+                </form>
+</div>
