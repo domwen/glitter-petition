@@ -280,6 +280,8 @@ app.post('/login', (req, res) => {
 // PETITION PAGE
 
 app.get('/petition', checkForUserId, (req, res) => {
+    console.log('req.session.user.firstName: ', req.session.user.firstName);
+    console.log('req.session.user.lastName :', req.session.user.lastName);
     res.render('petition', {
         layout: 'main',
         firstName: req.session.user.firstName,

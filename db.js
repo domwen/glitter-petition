@@ -39,7 +39,7 @@ module.exports.saveUser = params => {
 };
 
 module.exports.getPassword = params => {
-    const q = 'SELECT password FROM users WHERE email = $1';
+    const q = 'SELECT password, first, last, id FROM users WHERE email = $1';
     return db.query(q, [params]);
 };
 
