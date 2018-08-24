@@ -27,8 +27,7 @@ body {
     -webkit-animation: colorchange 2s infinite alternate;
 }
 #reichstag {
-    max-width: 40%;
-    max-height: 40%;
+    width: 500px;
 }
 header,
 footer {

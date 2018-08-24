@@ -1,6 +1,10 @@
 const spicedPg = require('spiced-pg');
 
-const db = spicedPg('postgres:postgres:postgres@localhost:5432/postgres');
+var dbUrl =
+    process.env.DATABASE_URL ||
+    'postgres:postgres:postgres@localhost:5432/postgres';
+
+const db = spicedPg(dbUrl);
 
 module.exports.saveProfile = params => {
     const q =
