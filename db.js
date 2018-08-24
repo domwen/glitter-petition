@@ -78,7 +78,12 @@ module.exports.updateUserTable = (user_id, first, last, email, password) => {
     return db.query(q, [user_id, first, last, email, password]);
 };
 
-exports.updateUserTableWithoutPassword = (user_id, first, last, email) => {
+module.exports.updateUserTableWithoutPassword = (
+    user_id,
+    first,
+    last,
+    email
+) => {
     const q = `
     UPDATE users
     SET first = $2, last = $3, email = $4
@@ -87,7 +92,7 @@ exports.updateUserTableWithoutPassword = (user_id, first, last, email) => {
     return db.query(q, [user_id, first, last, email]);
 };
 
-exports.updateProfileTable = (age, city, url, user_id) => {
+module.exports.updateProfileTable = (age, city, url, user_id) => {
     const q = `
     INSERT INTO user_profiles (age, city, url, user_id)
     VALUES ($1, $2, $3, $4)
@@ -95,4 +100,12 @@ exports.updateProfileTable = (age, city, url, user_id) => {
     DO UPDATE SET age = $1, city = $2, url = $3
     `;
     return db.query(q, [age, city, url, user_id]);
+};
+
+module.exports.deleteSignature = user_id => {
+    const q = `
+    DELETE FROM signatures
+    WHERE user_id = ($1)
+    `;
+    return db.query(q, [user_id]);
 };

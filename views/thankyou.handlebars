@@ -4,11 +4,18 @@
 <img src="/thankyou.gif" id="reichstag">
 <div style="display: flex; flex-direction: column;
 align-items: center;"><h2 class="petText">Your signature</h2>
-    <img style="width: 400px; height: 80px;" src="{{signatureUrl}}">
+    <canvas id="canv" width="400" height="75"><img style="width: 400px; height: 80px;" src="{{signatureUrl}}"></canvas>
 </div>
 
 <div><a href="/signers" target="_self">See all {{count}} signers!</a></div>
 
 <div><a href="/profile/edit" target="_self">Edit your profile!</a></div>
 
+<div>
+    <form id="unsignPetition" method="post">
+        <button id="gimmeglitter">Click here to remove your signature from the face of the Earth</button>
+        <input name="_csrf" value="{{csrfToken}}" type="hidden">
+
+    </form>
+</div>
 </div>

@@ -13,7 +13,8 @@ const {
     extractProfileInfo,
     updateUserTable,
     updateUserTableWithoutPassword,
-    updateProfileTable
+    updateProfileTable,
+    deleteSignature
 } = require('./db');
 const bodyParser = require('body-parser');
 const hb = require('express-handlebars');
@@ -314,7 +315,7 @@ app.post('/petition', (req, res) => {
         });
 });
 
-// THANK YOU
+// THANK YOU PAGE
 
 app.get('/thankyou', checkForSigId, (req, res) => {
     getSignature(req.session.user.signID).then(results => {
@@ -324,6 +325,24 @@ app.get('/thankyou', checkForSigId, (req, res) => {
         });
         console.log('After results :', results);
     });
+});
+
+app.post('/thankYou', function(req, res) {
+    deleteSignature(req.session.user.userId)
+        .then(results => {
+            delete req.session.user.signID;
+            res.render('petition', {
+                layout: 'main',
+                deleted: true
+            });
+        })
+        .catch(err => {
+            console.log('Error is in deleteSignature', err);
+            res.render('thanksPage', {
+                layout: 'main',
+                error: true
+            });
+        });
 });
 
 // SIGNERS PAGE
