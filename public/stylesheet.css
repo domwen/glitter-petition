@@ -28,7 +28,7 @@ a.button {
 }
 #mainContainer {
     display: flex;
-    min-height: calc(100vh - 5vh);
+    min-height: calc(100vh - 10vh);
     flex-direction: column;
     align-items: center;
     font-family: Arial;
@@ -46,7 +46,7 @@ a.button {
 header,
 footer {
     /* background: turquoise; */
-    height: 20px;
+    height: 40px;
     color: white;
     -webkit-animation: bgcolorchange 2s infinite alternate;
 }
@@ -83,7 +83,7 @@ footer {
     font-family: futura;
     font-style: italic;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     -webkit-animation: colorchange 2s infinite alternate;
 }
 

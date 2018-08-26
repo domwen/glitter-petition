@@ -228,7 +228,7 @@ app.post('/profile/edit', (req, res) => {
         req.session.user.userId
     )
         .then(result => {
-            res.redirect('/petition');
+            res.redirect('/thankyou');
         })
         .catch(err => {
             console.log('Error in updateProfileTable: ', err);
