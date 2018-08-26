@@ -70,14 +70,15 @@ function checkForUserId(req, res, next) {
     }
 }
 
-// REGISTER PAGE
-
-app.get('/', checkForUserId, (req, res) => {
+// ROOT ROUTE
+app.get('/', (req, res) => {
     console.log('From homepage');
-    res.render('petition', {
+    res.render('warning', {
         layout: 'main'
     });
 });
+
+// REGISTER PAGE
 
 app.get('/register', (req, res) => {
     res.render('register', {
