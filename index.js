@@ -53,7 +53,7 @@ app.use(
 function checkForSigId(req, res, next) {
     console.log('inside checkForSigId', req.session);
 
-    if (!req.session.user) {
+    if (!req.session.user.signID) {
         res.redirect('/petition');
     } else {
         next();
@@ -289,9 +289,7 @@ app.post('/login', (req, res) => {
 
 app.get('/petition', checkForUserId, (req, res) => {
     res.render('petition', {
-        layout: 'main',
-        firstName: req.session.user.firstName,
-        lastName: req.session.user.lastName
+        layout: 'main'
     });
 });
 
@@ -331,10 +329,7 @@ app.post('/thankYou', function(req, res) {
     deleteSignature(req.session.user.userId)
         .then(results => {
             delete req.session.user.signID;
-            res.render('petition', {
-                layout: 'main',
-                deleted: true
-            });
+            res.redirect('/petition');
         })
         .catch(err => {
             console.log('Error is in deleteSignature', err);
@@ -365,13 +360,14 @@ app.get('/signers', (req, res) => {
 app.get('/signers/:city', (req, res) => {
     var cityName = req.params.city;
     lookForCity(cityName).then(names => {
+        console.log('SIGNERS BY CITY names: ', names.rows);
         res.render('signersByCity', {
             layout: 'main',
             signers: names.rows,
             count: names.rowCount,
-            age: names.age,
-            city: names.city,
-            url: names.url
+            age: names.rows[0].age,
+            city: names.rows[0].city,
+            url: names.rows[0].url
         });
     });
 });

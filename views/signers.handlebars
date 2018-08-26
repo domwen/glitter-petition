@@ -1,11 +1,11 @@
 <div id="mainContainer">
-    <h2 style="margin-top: 40px;">Here You Can Find All The <a style="color: red;">({{count}})</a> People Who Have Already Signed!</h2>
+    <h2 style="margin-top: 40px;">Here You Can Find All The {{count}} People Who Have Already Signed!</h2>
     <ul class="list">
 
         {{#each signers}}
             {{#if url}}
 
-            <li> <a href="/{{url}}">{{first}} {{last}}</a>,  {{age}},  <a href="/signers/{{city}}">{{city}}</a></li>
+            <li> <a href="http://{{url}}">{{first}} {{last}}</a>,  {{age}},  <a href="/signers/{{city}}">{{city}}</a></li>
 
             {{else}}
 

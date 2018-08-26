@@ -8,12 +8,13 @@
         <div id="mainContainer">
 
         <h1>PROFILE</h1>
-        <h2>Hello {{firstName}} {{lastName}}</h2>
+        <h3>Hello {{firstName}} {{lastName}}!<br>
+        Please provide some more info about yourself.</h3>
         <form method="POST" class="form">
         <div>
             <input name="age" placeholder="Your age" required>
             <input name="city" placeholder="City" required>
-            <input name="url" placeholder="Homepage" required>
+            <input name="url" placeholder="Homepage">
                     </div>
         <input type="hidden" name="_csrf" value="{{csrfToken}}">
         <button id="profileContinue">Continue</button>

@@ -6,16 +6,18 @@
         Demand that Merkel allows Britney to cover the Reichstag in glitter for an immersive art performance!
     {{/if}}
 </div>
+<div id="imgContainer">
     <img src="/britney.webp">
     <img src="/reichstag.jpg" id="reichstag"><br>
+</div>
+<div>
     <form method="POST" class="form">
-    <div><input name="first" placeholder="First name" value="{{firstName}}">
-    <input name="last" placeholder="Last name" value="{{lastName}}"></div>
+    <div>Please sign below!</div>
     <input id="sig" name="sig" type="hidden">
     <input type="hidden" name="_csrf" value="{{csrfToken}}">
     <canvas id="canv" width="400" height="75"></canvas>
     <button id="gimmeglitter">GIMME GLITTER!</button>
-
 </form>
+</div>
 
 </div>

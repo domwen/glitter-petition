@@ -8,6 +8,19 @@ body {
     text-align: center;
 }
 
+ul {
+    list-style: none;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+    appearance: button;
+
+    text-decoration: none;
+    color: initial;
+}
+
 .form {
     display: flex;
     flex-direction: column;
@@ -25,15 +38,17 @@ body {
     border: 4px dashed;
     margin: 10px;
     -webkit-animation: colorchange 2s infinite alternate;
+    padding: 10px;
 }
 #reichstag {
     width: 500px;
 }
 header,
 footer {
-    background: turquoise;
+    /* background: turquoise; */
     height: 20px;
     color: white;
+    -webkit-animation: bgcolorchange 2s infinite alternate;
 }
 
 .highlight {
@@ -41,10 +56,18 @@ footer {
     font-style: italic;
 }
 
+#imgContainer img {
+    border: 4px dashed;
+    margin: 10px;
+    -webkit-animation: colorchange 2s infinite alternate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .petText {
-    font-family: futura;
+    font-family: Arial;
     font-style: italic;
-
+    margin: 20px;
     width: 100%;
 
     text-align: center;
@@ -114,5 +137,50 @@ footer {
 
     100% {
         color: pink;
+    }
+}
+
+@-webkit-keyframes bgcolorchange {
+    0% {
+        background: blue;
+    }
+
+    10% {
+        background: #8e44ad;
+    }
+
+    20% {
+        background: #1abc9c;
+    }
+
+    30% {
+        background: #d35400;
+    }
+
+    40% {
+        background: blue;
+    }
+
+    50% {
+        background: #34495e;
+    }
+
+    60% {
+        background: blue;
+    }
+
+    70% {
+        background: #2980b9;
+    }
+    80% {
+        background: #f1c40f;
+    }
+
+    90% {
+        background: #2980b9;
+    }
+
+    100% {
+        background: pink;
     }
 }

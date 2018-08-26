@@ -48,8 +48,10 @@
                             <p>Homepage</p>
                             <input class="nameInput" name="url" value="{{ url }}" required>
                         </div>
-                    <button class="gimmeglitter">Update</button>
+                    <button id="gimmeglitter">Update</button>
+                    <input type="button" value="Go back" onclick="window.history.go(-1)"></input>
                 </div>
+
                     <input name="_csrf" value="{{csrfToken}}" type="hidden"> <!-- security feature -->
                 </form>
 </div>

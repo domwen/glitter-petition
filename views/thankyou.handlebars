@@ -4,7 +4,7 @@
 <img src="/thankyou.gif" id="reichstag">
 <div style="display: flex; flex-direction: column;
 align-items: center;"><h2 class="petText">Your signature</h2>
-    <canvas id="canv" width="400" height="75"><img style="width: 400px; height: 80px;" src="{{signatureUrl}}"></canvas>
+    <img style="width: 400px; height: 80px;" id="canv" src="{{signatureUrl}}">
 </div>
 
 <div><a href="/signers" target="_self">See all {{count}} signers!</a></div>
@@ -13,9 +13,11 @@ align-items: center;"><h2 class="petText">Your signature</h2>
 
 <div>
     <form id="unsignPetition" method="post">
-        <button id="gimmeglitter">Click here to remove your signature from the face of the Earth</button>
+        <button id="gimmeglitter">Click here to wipe your signature off the face of the Earth</button>
         <input name="_csrf" value="{{csrfToken}}" type="hidden">
 
     </form>
+    <a href="/logout" target="_self"><button>Logout</button></a>
+
 </div>
 </div>
